@@ -1,13 +1,13 @@
 import math
+import os
 import random
 import time
-
-import os
 
 import colorama
 from colorama import Fore, init
 
-init() # Initialize the colorama system
+init()  # Initialize the colorama system
+
 
 class Sudoku:
     def __init__(self, _g = []):
@@ -51,12 +51,10 @@ class Sudoku:
 
             self.centerWeights[id] = int(round(100 * math.sqrt((row - 4) ** 2 + (col - 4) ** 2)))
 
-
-
     # for debugging purposes
     def dump(self, _custom_text, _file_object):
         _custom_text += ", cell: {}, choice: {}, choices: {}, empty: {}, history: {}, grid: {}\n".format(
-            self.current_cell, self.current_choice, self.choices, self.empty_cells, self.history, self.grid )
+            self.current_cell, self.current_choice, self.choices, self.empty_cells, self.history, self.grid)
         _file_object.write(_custom_text)
 
     # to be called before each solve of the grid
@@ -157,7 +155,7 @@ class Sudoku:
 
         self.grid[row][col] = _value
 
-    def getCell( self, _id ):
+    def getCell(self, _id):
 
         row = _id // 9
         col = _id % 9
@@ -180,8 +178,7 @@ class Sudoku:
 
             if self.grid[i][col] == 0: result.add(i * 9 + col)
 
-
-        for x in range((row // 3) * 3, (row // 3 ) * 3 + 3):
+        for x in range((row // 3) * 3, (row // 3) * 3 + 3):
 
             for y in range((col // 3) * 3, (col // 3) * 3 + 3):
 
@@ -368,6 +365,7 @@ class Sudoku:
         self.nextChoiceWeights_3(_factor * -1)
 
     def nextChoiceWeights_5(self, _factor):  # the digit that will cause related blank cells to have the least number of choices available
+    
         cell_choices = {}
 
         for id in self.getRelatedBlankCells(self.current_cell):
@@ -389,9 +387,11 @@ class Sudoku:
             self.nextChoiceWeights[c] += weight * _factor
 
     def nextChoiceWeights_6(self, _factor):  # the digit that will cause related blank cells to have the most number of choices available
+
         self.nextChoiceWeights_5(_factor * -1)
 
     def nextChoiceWeights_7(self, _factor):  # the digit that is the least common available choice among related blank cells
+
         cell_choices = {}
 
         for id in self.getRelatedBlankCells(self.current_cell):
@@ -411,9 +411,11 @@ class Sudoku:
             self.nextChoiceWeights[c] += weight * _factor
 
     def nextChoiceWeights_8(self, _factor):  # the digit that is the most common available choice among related blank cells
+
         self.nextChoiceWeights_7(_factor * -1)
 
     def nextChoiceWeights_9(self, _factor):  # the digit that is the least common available choice across the board
+
         cell_choices = {}
 
         for id in range(81):
@@ -439,6 +441,7 @@ class Sudoku:
 
     # the main function to be called
     def solve(self, _nextCellMethod, _nextChoiceMethod, _start_time, _prefillSingleChoiceCells = False):
+
         s = self
         s.reset()
 
@@ -482,6 +485,7 @@ class Sudoku:
 
             else:
                 print("(B) Incorrect optimization parameters provided")
+
                 return False
         else:
             s.nextCellWeights_2 = lambda x: None
@@ -577,11 +581,13 @@ class Sudoku:
             if s.validate():
 
                 print("Sudoku provided is valid!")
+
                 return True
 
             else:
 
                 print("Sudoku provided is not valid!")
+
                 return False
 
         else:
@@ -633,7 +639,7 @@ class Sudoku:
                 s.choices[s.current_cell] = s.getChoices(s.current_cell)  # get possible choices for the chosen cell
 
                 if len(s.choices[s.current_cell]) > 0:  # if there is at least one available digit, then choose it and move to the next iteration, otherwise the iteration continues below with a backtrack
-                    
+
                     s.nextChoice()
 
                     continue
@@ -715,6 +721,7 @@ while True:
     inp = input("> ")
 
     try:
+
         if int(inp) == 1:
 
             for i in range(9):
@@ -722,9 +729,9 @@ while True:
                 for j in range(9):
 
                     os.system('cls')  # clear the console
-                    
+
                     # Print the grid
-                    print("\n\n")
+                    print("\n\nType a number between 0 and 9.\nIf it is blank, press <enter>.\n\n")
 
                     print("|--------|---------|---------|")
 
@@ -795,7 +802,6 @@ while True:
                         if (m + 1) % 3 == 0:
 
                             print("|--------|---------|---------|")
-                            
 
                     print("\n")
 
@@ -840,7 +846,7 @@ while True:
 
             break
 
-    # Invalid litteral of an integer comparison with overflow error 
+    # Invalid litteral of an integer comparison with overflow error
     except ValueError:
 
         if inp.lower() == "q":
