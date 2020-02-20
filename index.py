@@ -860,3 +860,4 @@ while True:
             print("1 - Own Puzzle")
             print("2 - Example")
             print("Q - Quit")
+            
